@@ -1,20 +1,20 @@
 import fs from 'fs';
+import { MatchReader } from './MatchReader';
+import { CsvFileReader } from './CsvFileReader';
+import { doesNotMatch, match } from 'assert';
+import { Summary } from './Summary';
+import { WinsAnalysis } from './Analysers';
+import { ConsoleReport } from './OutputTargets';
 
-const matches = fs
-  .readFileSync('football.csv', {
-    encoding: 'utf-8',
-  })
-  .split('\n')
-  .map((row: string): string[] => row.split(','));
-
-let manUnitedWins = 0;
-
-for (let match of matches) {
-  if (match[1] === 'Man United' && match[5] === 'H') {
-    manUnitedWins++;
-  } else if (match[2] === 'Man United' && match[5] === 'A') {
-    manUnitedWins++;
-  }
+const matchReader = new MatchReader(new CsvFileReader('football.csv'));
+matchReader.load();
+const matches = matchReader.matches;
+export enum MatchResult {
+  HomeWin = 'H',
+  AwayWin = 'A',
+  Draw = 'D',
 }
 
-console.log(`Man United won ${manUnitedWins} games`);
+const summary = Summary.winsSummaryConsoleOutput('Man United');
+
+summary.buildAndPrint(matches);
