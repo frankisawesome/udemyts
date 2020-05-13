@@ -29,9 +29,7 @@ export class Model<T extends Identifiable> {
     private attributes: ModelAttributes<T>,
     private events: Events,
     private sync: Sync<T>
-  ) {
-    this.on('change', () => this.save());
-  }
+  ) {}
 
   on = this.events.on;
   trigger = this.events.trigger;
