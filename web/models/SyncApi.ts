@@ -4,7 +4,7 @@ interface Identifiable {
   id?: number;
 }
 
-export class Sync<T extends Identifiable> {
+export class SyncApi<T extends Identifiable> {
   constructor(public rootUrl: string) {}
   public fetch(id: number): AxiosPromise {
     return axios.get(`${this.rootUrl}/${id}`);

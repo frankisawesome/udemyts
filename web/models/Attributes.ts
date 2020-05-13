@@ -6,7 +6,7 @@ export class Attributes<T> {
   };
 
   public set(update: T): void {
-    Object.assign(this.data, update);
+    (<any>Object).assign(this.data, update);
   }
 
   getAll(): T {
